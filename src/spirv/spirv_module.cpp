@@ -42,13 +42,10 @@ namespace dxvk {
           spv::Capability         capability) {
     // Scan the generated instructions to check
     // whether we already enabled the capability.
-    for (auto ins : m_capabilities) {
-      if (ins.opCode() == spv::OpCapability && ins.arg(1) == capability)
-        return;
-    }
-    
+    if (m_enabledCaps.find(capability) != m_enabledCaps.end()) return;
     m_capabilities.putIns (spv::OpCapability, 2);
     m_capabilities.putWord(capability);
+    m_enabledCaps.insert(capability);
   }
   
   
