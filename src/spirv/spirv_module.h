@@ -1277,7 +1277,7 @@ namespace dxvk {
     std::unordered_map<float, uint32_t>    m_constFloat32;
     std::unordered_map<double, uint32_t>   m_constFloat64;
 
-    std::unordered_set<uint32_t> m_lateConsts;
+    std::unordered_map<uint32_t, size_t> m_lateConsts;
 
     uint32_t defTypeCached(
             std::optional<uint32_t>&cache,
