@@ -570,7 +570,7 @@ namespace dxvk {
     const Rc<DxvkImageView>&    imageView,
           VkImageAspectFlags    clearAspects,
           VkClearValue          clearValue) {
-    this->updateFramebuffer();
+    this->updateFramebuffer(false);
 
     // Prepare attachment ops
     DxvkColorAttachmentOps colorOp;
@@ -2606,7 +2606,7 @@ namespace dxvk {
           VkExtent3D            extent,
           VkImageAspectFlags    aspect,
           VkClearValue          value) {
-    this->updateFramebuffer();
+    this->updateFramebuffer(false);
 
     // Find out if the render target view is currently bound,
     // so that we can avoid spilling the render pass if it is.
@@ -3837,7 +3837,7 @@ namespace dxvk {
       : DxvkContextFlag::GpDirtyStencilRef);
     
     // Retrieve and bind actual Vulkan pipeline handle
-    m_gpActivePipeline = m_state.gp.pipeline->getPipelineHandle(m_state.gp.state, m_state.om.framebuffer->getRenderPass());
+    m_gpActivePipeline = m_state.gp.pipeline->getPipelineHandle(m_state.gp.state, m_state.om.framebuffer->getRenderPass(), this->checkAsyncCompilationCompat());
 
     if (unlikely(!m_gpActivePipeline))
       return false;
@@ -4093,7 +4093,7 @@ namespace dxvk {
   }
   
   
-  void DxvkContext::updateFramebuffer() {
+  void DxvkContext::updateFramebuffer(bool isDraw) {
     if (m_flags.test(DxvkContextFlag::GpDirtyFramebuffer)) {
       m_flags.clr(DxvkContextFlag::GpDirtyFramebuffer);
 
@@ -4112,6 +4112,11 @@ namespace dxvk {
           : VkComponentMapping();
 
         m_state.gp.state.omSwizzle[i] = DxvkOmAttachmentSwizzle(mapping);
+      }
+
+      if (isDraw) {
+        for (uint32_t i = 0; i < fb->numAttachments(); i++)
+          fb->getAttachment(i).view->setRtBindingFrameId(m_device->getCurrentFrameId());
       }
 
       m_flags.set(DxvkContextFlag::GpDirtyPipelineState);
@@ -4343,7 +4348,7 @@ namespace dxvk {
     }
 
     if (m_flags.test(DxvkContextFlag::GpDirtyFramebuffer))
-      this->updateFramebuffer();
+      this->updateFramebuffer(true);
 
     if (!m_flags.test(DxvkContextFlag::GpRenderPassBound))
       this->startRenderPass();
@@ -4794,4 +4799,13 @@ namespace dxvk {
     return m_cpLookupCache[idx];
   }
   
+
+  bool DxvkContext::checkAsyncCompilationCompat() {
+    bool fbCompat = true;
+    for (uint32_t i = 0; fbCompat && i < m_state.om.framebuffer->numAttachments(); i++) {
+      const auto& attachment = m_state.om.framebuffer->getAttachment(i);
+      fbCompat &= attachment.view->getRtBindingAsyncCompilationCompat();
+    }
+    return fbCompat;
+  }
 }
