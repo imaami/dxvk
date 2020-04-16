@@ -6,6 +6,7 @@ namespace dxvk {
     enableStateCache      = config.getOption<bool>    ("dxvk.enableStateCache",       true);
     enableOpenVR          = config.getOption<bool>    ("dxvk.enableOpenVR",           true);
     enableOpenXR          = config.getOption<bool>    ("dxvk.enableOpenXR",           true);
+    useAsync              = config.getOption<bool>    ("dxvk.useAsync",               false);
     numCompilerThreads    = config.getOption<int32_t> ("dxvk.numCompilerThreads",     0);
     useRawSsbo            = config.getOption<Tristate>("dxvk.useRawSsbo",             Tristate::Auto);
     useEarlyDiscard       = config.getOption<Tristate>("dxvk.useEarlyDiscard",        Tristate::Auto);
