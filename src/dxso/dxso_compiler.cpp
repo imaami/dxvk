@@ -251,6 +251,10 @@ namespace dxvk {
       m_resourceSlots.data(),
       m_interfaceSlots,
       m_module.compile(),
+      m_module.exportsStencil(),
+      m_module.hasTransformFeedback(),
+      m_module.hasSampleRateShading(),
+      m_module.exportsViewportIndex(),
       shaderOptions,
       std::move(constData));
   }

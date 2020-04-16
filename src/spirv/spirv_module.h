@@ -3,6 +3,7 @@
 #include <unordered_set>
 
 #include "spirv_code_buffer.h"
+#include "spirv_compression.h"
 
 namespace dxvk {
   
@@ -49,7 +50,7 @@ namespace dxvk {
 
     ~SpirvModule();
     
-    SpirvCodeBuffer compile() const;
+    SpirvCompressedBuffer compile() const;
     
     size_t getInsertionPtr() {
       return m_code.getInsertionPtr();
@@ -1219,6 +1220,26 @@ namespace dxvk {
     void opEndPrimitive(
             uint32_t                streamId);
     
+    bool exportsStencil() {
+      return m_enabledModes.find(spv::ExecutionModeStencilRefReplacingEXT) !=
+        m_enabledModes.end();
+    }
+
+    bool hasTransformFeedback() {
+      return m_enabledModes.find(spv::ExecutionModeXfb) !=
+        m_enabledModes.end();
+    }
+
+    bool hasSampleRateShading() {
+      return m_enabledCaps.find(spv::CapabilitySampleRateShading) !=
+        m_enabledCaps.end();
+    }
+    
+    bool exportsViewportIndex() {
+      return m_enabledCaps.find(spv::CapabilityShaderViewportIndexLayerEXT) !=
+        m_enabledCaps.end();
+    }
+
   private:
     
     uint32_t m_version;
