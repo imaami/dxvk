@@ -10,6 +10,7 @@ namespace dxvk {
 
     /// Enable state cache
     bool enableStateCache;
+    bool useAsync;
 
     /// Enables OpenVR loading
     bool enableOpenVR;
