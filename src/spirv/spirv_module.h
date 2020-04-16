@@ -1250,6 +1250,7 @@ namespace dxvk {
     SpirvCodeBuffer m_variables;
     SpirvCodeBuffer m_code;
 
+    std::unordered_set<spv::Capability>  m_enabledCaps;
     std::vector<size_t> m_typeLocs;
     std::vector<size_t> m_constLocs;
 
