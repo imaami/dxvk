@@ -14,9 +14,7 @@ namespace dxvk {
     if (device->config().numCompilerThreads > 0)
       numWorkers = device->config().numCompilerThreads;
 
-    Logger::info(str::format(
-      "DxvkPipelineCompiler: Using ",
-      numWorkers, " workers"));
+    Logger::info(str::format("DXVK: Using ", numWorkers, " async compiler threads"));
 
     // Start the compiler threads
     m_compilerThreads.resize(numWorkers);
