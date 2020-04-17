@@ -1160,6 +1160,7 @@ namespace dxvk {
       const DxvkPipelineLayout*     layout);
 
     void updateFramebuffer(bool isDraw);
+    bool checkAsyncCompilationCompat();
     
     void updateIndexBufferBinding();
     void updateVertexBufferBindings();
@@ -1217,7 +1218,6 @@ namespace dxvk {
     DxvkComputePipeline* lookupComputePipeline(
       const DxvkComputePipelineShaders&   shaders);
 
-    bool checkAsyncCompilationCompat();
   };
   
 }
