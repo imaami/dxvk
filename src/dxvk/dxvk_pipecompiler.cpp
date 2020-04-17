@@ -29,7 +29,7 @@ namespace dxvk {
 
 
   DxvkPipelineCompiler::~DxvkPipelineCompiler() {
-    { std::unique_lock<dxvk::mutex> lock(m_compilerLock);
+    { std::lock_guard<dxvk::mutex> lock(m_compilerLock);
       m_compilerStop.store(true);
     }
 
@@ -43,7 +43,7 @@ namespace dxvk {
     DxvkGraphicsPipeline*                   pipeline,
     const DxvkGraphicsPipelineStateInfo&    state,
     const DxvkRenderPass*                   renderPass) {
-    std::unique_lock<dxvk::mutex> lock(m_compilerLock);
+    std::lock_guard<dxvk::mutex> lock(m_compilerLock);
     m_compilerQueue.push({ pipeline, state, renderPass });
     m_compilerCond.notify_one();
   }
