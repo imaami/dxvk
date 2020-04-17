@@ -1244,6 +1244,7 @@ namespace dxvk {
       const DxvkPipelineLayout*     layout);
 
     void updateFramebuffer(bool isDraw);
+    bool checkAsyncCompilationCompat();
     
     void applyRenderTargetLoadLayouts();
 
@@ -1335,7 +1336,6 @@ namespace dxvk {
     Rc<DxvkBuffer> createZeroBuffer(
             VkDeviceSize              size);
 
-    bool checkAsyncCompilationCompat();
   };
   
 }
