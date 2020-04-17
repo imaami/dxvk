@@ -1179,6 +1179,7 @@ namespace dxvk {
       const DxvkPipelineLayout*     layout);
 
     void updateFramebuffer(bool isDraw);
+    bool checkAsyncCompilationCompat();
     
     bool updateIndexBufferBinding();
     void updateVertexBufferBindings();
@@ -1246,7 +1247,6 @@ namespace dxvk {
     Rc<DxvkBuffer> createZeroBuffer(
             VkDeviceSize              size);
 
-    bool checkAsyncCompilationCompat();
   };
   
 }
