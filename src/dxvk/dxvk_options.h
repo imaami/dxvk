@@ -10,6 +10,8 @@ namespace dxvk {
 
     /// Enable state cache
     bool enableStateCache;
+
+    // Enable async pipelines
     bool useAsync;
 
     /// Enables OpenVR loading
@@ -21,6 +23,10 @@ namespace dxvk {
     /// Number of compiler threads
     /// when using the state cache
     int32_t numCompilerThreads;
+
+    /// Number of compiler threads
+    /// when using async pipelines
+    int32_t numAsyncCompilerThreads;
 
     /// Shader-related options
     Tristate useRawSsbo;
