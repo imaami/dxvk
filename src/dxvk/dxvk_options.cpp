@@ -7,6 +7,7 @@ namespace dxvk {
     enableOpenVR          = config.getOption<bool>    ("dxvk.enableOpenVR",           true);
     useAsync              = config.getOption<bool>    ("dxvk.useAsync",               false);
     numCompilerThreads    = config.getOption<int32_t> ("dxvk.numCompilerThreads",     0);
+    numCompilerThreads    = config.getOption<int32_t> ("dxvk.numAsyncCompilerThreads",0);
     useRawSsbo            = config.getOption<Tristate>("dxvk.useRawSsbo",             Tristate::Auto);
     useEarlyDiscard       = config.getOption<Tristate>("dxvk.useEarlyDiscard",        Tristate::Auto);
     hud                   = config.getOption<std::string>("dxvk.hud", "");
