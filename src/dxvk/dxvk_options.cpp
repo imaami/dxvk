@@ -3,11 +3,11 @@
 namespace dxvk {
 
   DxvkOptions::DxvkOptions(const Config& config) {
+    enableAsync           = config.getOption<bool>    ("dxvk.enableAsync",            true);
     enableStateCache      = config.getOption<bool>    ("dxvk.enableStateCache",       true);
     enableOpenVR          = config.getOption<bool>    ("dxvk.enableOpenVR",           true);
-    useAsync              = config.getOption<bool>    ("dxvk.useAsync",               false);
+    numAsyncThreads       = config.getOption<int32_t> ("dxvk.numAsyncThreads",        0);
     numCompilerThreads    = config.getOption<int32_t> ("dxvk.numCompilerThreads",     0);
-    numAsyncCompilerThreads = config.getOption<int32_t> ("dxvk.numAsyncCompilerThreads",0);
     useRawSsbo            = config.getOption<Tristate>("dxvk.useRawSsbo",             Tristate::Auto);
     useEarlyDiscard       = config.getOption<Tristate>("dxvk.useEarlyDiscard",        Tristate::Auto);
     hud                   = config.getOption<std::string>("dxvk.hud", "");

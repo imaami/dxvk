@@ -9,14 +9,14 @@ namespace dxvk {
           DxvkRenderPassPool* passManager)
   : m_device    (device),
     m_cache     (new DxvkPipelineCache(device->vkd())) {
-    std::string useStateCache = env::getEnvVar("DXVK_STATE_CACHE");
     std::string useAsync      = env::getEnvVar("DXVK_ASYNC");
+    std::string useStateCache = env::getEnvVar("DXVK_STATE_CACHE");
+
+    if (useAsync != "0" || device->config().enableAsync)
+      m_compiler = new DxvkPipelineCompiler(device);
     
     if (useStateCache != "0" && device->config().enableStateCache)
       m_stateCache = new DxvkStateCache(device, this, passManager);
-
-    if (useAsync != "0" || device->config().useAsync)
-      m_compiler = new DxvkPipelineCompiler(device);
   }
   
   
