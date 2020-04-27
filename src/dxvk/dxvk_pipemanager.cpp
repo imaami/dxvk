@@ -12,7 +12,7 @@ namespace dxvk {
     std::string useAsync      = env::getEnvVar("DXVK_ASYNC");
     std::string useStateCache = env::getEnvVar("DXVK_STATE_CACHE");
 
-    if (useAsync != "0" || device->config().useAsync)
+    if (useAsync != "0" || device->config().enableAsync)
       m_compiler = new DxvkPipelineCompiler(device);
     
     if (useStateCache != "0" && device->config().enableStateCache)
