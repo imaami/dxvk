@@ -11,8 +11,8 @@ namespace dxvk {
     if (numWorkers <  1) numWorkers =  1;
     if (numWorkers > 32) numWorkers = 32;
 
-    if (device->config().numAsyncCompilerThreads > 0)
-      numWorkers = device->config().numAsyncCompilerThreads;
+    if (device->config().numAsyncThreads > 0)
+      numWorkers = device->config().numAsyncThreads;
 
     Logger::info(str::format("DXVK: Using ", numWorkers, " async compiler threads"));
 
