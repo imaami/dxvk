@@ -8,22 +8,22 @@ namespace dxvk {
     DxvkOptions() { }
     DxvkOptions(const Config& config);
 
+    // Enable async pipelines
+    bool enableAsync;
+
     /// Enable state cache
     bool enableStateCache;
-
-    // Enable async pipelines
-    bool useAsync;
 
     /// Enables OpenVR loading
     bool enableOpenVR;
 
     /// Number of compiler threads
-    /// when using the state cache
-    int32_t numCompilerThreads;
+    /// when using async pipelines
+    int32_t numAsyncThreads;
 
     /// Number of compiler threads
-    /// when using async pipelines
-    int32_t numAsyncCompilerThreads;
+    /// when using the state cache
+    int32_t numCompilerThreads;
 
     /// Shader-related options
     Tristate useRawSsbo;
