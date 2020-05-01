@@ -3023,7 +3023,7 @@ namespace dxvk {
           VkExtent3D            extent,
           VkImageAspectFlags    aspect,
           VkClearValue          value) {
-    this->updateFramebuffer(false);
+    this->updateFramebuffer();
 
     // Find out if the render target view is currently bound,
     // so that we can avoid spilling the render pass if it is.
