@@ -2603,7 +2603,7 @@ namespace dxvk {
           VkExtent3D            extent,
           VkImageAspectFlags    aspect,
           VkClearValue          value) {
-    this->updateFramebuffer(false);
+    this->updateFramebuffer();
 
     // Find out if the render target view is currently bound,
     // so that we can avoid spilling the render pass if it is.
@@ -3986,7 +3986,6 @@ namespace dxvk {
     }
   }
   
-  
   bool DxvkContext::checkAsyncCompilationCompat() {
     bool fbCompat = true;
     for (uint32_t i = 0; fbCompat && i < m_state.om.framebuffer->numAttachments(); i++) {
@@ -3995,7 +3994,7 @@ namespace dxvk {
     }
     return fbCompat;
   }
-
+  
   bool DxvkContext::updateIndexBufferBinding() {
     if (unlikely(!m_state.vi.indexBuffer.defined()))
       return false;
