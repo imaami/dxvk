@@ -3986,14 +3986,6 @@ namespace dxvk {
     }
   }
   
-  bool DxvkContext::checkAsyncCompilationCompat() {
-    bool fbCompat = true;
-    for (uint32_t i = 0; fbCompat && i < m_state.om.framebuffer->numAttachments(); i++) {
-      const auto& attachment = m_state.om.framebuffer->getAttachment(i);
-      fbCompat &= attachment.view->getRtBindingAsyncCompilationCompat();
-    }
-    return fbCompat;
-  }
   
   bool DxvkContext::updateIndexBufferBinding() {
     if (unlikely(!m_state.vi.indexBuffer.defined()))
@@ -4660,6 +4652,14 @@ namespace dxvk {
     }
   }
   
+  bool DxvkContext::checkAsyncCompilationCompat() {
+    bool fbCompat = true;
+    for (uint32_t i = 0; fbCompat && i < m_state.om.framebuffer->numAttachments(); i++) {
+      const auto& attachment = m_state.om.framebuffer->getAttachment(i);
+      fbCompat &= attachment.view->getRtBindingAsyncCompilationCompat();
+    }
+    return fbCompat;
+  }
 
   DxvkGraphicsPipeline* DxvkContext::lookupGraphicsPipeline(
     const DxvkGraphicsPipelineShaders&  shaders) {
