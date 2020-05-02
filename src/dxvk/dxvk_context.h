@@ -1244,7 +1244,6 @@ namespace dxvk {
       const DxvkPipelineLayout*     layout);
 
     void updateFramebuffer(bool isDraw = false);
-    bool checkAsyncCompilationCompat();
     
     void applyRenderTargetLoadLayouts();
 
@@ -1326,6 +1325,8 @@ namespace dxvk {
             VkDescriptorSetLayout     layout);
 
     void trackDrawBuffer();
+
+    bool checkAsyncCompilationCompat();
 
     DxvkGraphicsPipeline* lookupGraphicsPipeline(
       const DxvkGraphicsPipelineShaders&  shaders);
