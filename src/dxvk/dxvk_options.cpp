@@ -3,7 +3,7 @@
 namespace dxvk {
 
   DxvkOptions::DxvkOptions(const Config& config) {
-    enableAsync           = config.getOption<bool>    ("dxvk.enableAsync",            true);
+    enableAsync           = config.getOption<bool>    ("dxvk.enableAsync",            false);
     enableStateCache      = config.getOption<bool>    ("dxvk.enableStateCache",       true);
     enableOpenVR          = config.getOption<bool>    ("dxvk.enableOpenVR",           true);
     enableOpenXR          = config.getOption<bool>    ("dxvk.enableOpenXR",           true);
