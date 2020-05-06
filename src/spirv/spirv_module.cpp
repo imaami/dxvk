@@ -883,6 +883,7 @@ namespace dxvk {
           uint32_t                length) {
     std::array<uint32_t, 2> args = {{ typeId, length }};
     
+    m_typeLocs.push_back(m_typeConstDefs.getInsertionPtr());
     return this->defTypeUnique(spv::OpTypeArray,
       args.size(), args.data());
   }
@@ -901,6 +902,7 @@ namespace dxvk {
           uint32_t                typeId) {
     std::array<uint32_t, 1> args = { typeId };
     
+    m_typeLocs.push_back(m_typeConstDefs.getInsertionPtr());
     return this->defTypeUnique(spv::OpTypeRuntimeArray,
       args.size(), args.data());
   }
@@ -932,6 +934,7 @@ namespace dxvk {
   uint32_t SpirvModule::defStructTypeUnique(
           uint32_t                memberCount,
     const uint32_t*               memberTypes) {
+    m_typeLocs.push_back(m_typeConstDefs.getInsertionPtr());
     return this->defTypeUnique(spv::OpTypeStruct,
       memberCount, memberTypes);
   }
@@ -3738,18 +3741,16 @@ namespace dxvk {
     // Since the type info is stored in the code buffer,
     // we can use the code buffer to look up type IDs as
     // well. Result IDs are always stored as argument 1.
-    for (auto ins : m_typeConstDefs) {
-      bool match = ins.opCode() == op
-                && ins.length() == 2 + argCount;
-      
-      for (uint32_t i = 0; i < argCount && match; i++)
-        match &= ins.arg(2 + i) == argIds[i];
-      
-      if (match)
-        return ins.arg(1);
+    const uint32_t *data = m_typeConstDefs.data();
+    for (auto i : m_typeLocs) {
+      if ((data[i] & spv::OpCodeMask) == op &&
+          (data[i] >> spv::WordCountShift) == (2 + argCount) &&
+          (!argCount || !std::memcmp(data + i + 2, argIds, argCount * sizeof(uint32_t))))
+        return data[i + 1];
     }
     
     // Type not yet declared, create a new one.
+    m_typeLocs.push_back(m_typeConstDefs.getInsertionPtr());
     return this->defTypeUnique(op, argCount, argIds);
   }
   
