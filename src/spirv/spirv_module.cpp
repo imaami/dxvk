@@ -87,6 +87,7 @@ namespace dxvk {
     m_execModeInfo.putIns (spv::OpExecutionMode, 3);
     m_execModeInfo.putWord(entryPointId);
     m_execModeInfo.putWord(executionMode);
+    m_enabledModes.insert(executionMode);
   }
   
   
