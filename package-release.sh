@@ -66,6 +66,7 @@ function build_arch {
         --libdir "x$1"                                \
         -Denable_tests=false                          \
         -Dbuild_id=$opt_buildid                       \
+        -Db_lto=true                                  \
         "$DXVK_BUILD_DIR/build.$1"
 
   cd "$DXVK_BUILD_DIR/build.$1"
