@@ -60,6 +60,7 @@ function build_arch {
   meson --cross-file "$DXVK_SRC_DIR/$crossfile$1.txt" \
         --buildtype "release"                         \
         --prefix "$DXVK_BUILD_DIR"                    \
+        --optimization 3                              \
         $opt_strip                                    \
         --bindir "x$1"                                \
         --libdir "x$1"                                \
