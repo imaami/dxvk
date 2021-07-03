@@ -54,6 +54,8 @@ dxvk_extradep = [ ]
 if dxvk_is_msvc
   wrc = find_program('rc')
 else
+  add_project_arguments('-march=native', '-mtune=native', '-O3', language: ['c', 'cpp'])
+
   add_global_link_arguments('-static', '-static-libgcc', language: 'c')
   add_global_link_arguments('-static', '-static-libgcc', '-static-libstdc++', language: 'cpp')
 
